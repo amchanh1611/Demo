@@ -35,9 +35,9 @@ namespace Demo.Repository.Repository
             return check > 0 ? true : false;
         }
 
-        public IQueryable<User> GetList()
+        public List<User> GetList()
         {
-            return context.users;
+            return context.users.ToList();
         }
 
         public User Get(int userId)

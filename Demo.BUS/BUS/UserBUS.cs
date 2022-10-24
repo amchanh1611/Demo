@@ -31,12 +31,13 @@ namespace Demo.BUS.BUS
 
         public List<ResponseUser> GetList()
         {
-            List<User> lstUser = userRepository.GetList().ToList();
-            List<ResponseUser> lstResponse = new();
-            foreach (var user in lstUser)
-            {
-                lstResponse.Add(mapper.Map<ResponseUser>(user));
-            }
+            List<User> lstUser = userRepository.GetList();
+            List<ResponseUser> lstResponse = mapper.Map<List<User>, List<ResponseUser>>(lstUser);
+
+            //foreach (var user in lstUser)
+            //{
+            //    lstResponse.Add(mapper.Map<ResponseUser>(user));
+            //}
             return lstResponse;
         }
 

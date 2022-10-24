@@ -10,7 +10,7 @@ namespace Demo.Repository.IRepository
 {
     public interface IUserRepository
     {
-        public IQueryable<User> GetList();
+        public List<User> GetList();
         public User Get(int userID);
         public bool Create(User user);
         public bool Upadte(User users);
