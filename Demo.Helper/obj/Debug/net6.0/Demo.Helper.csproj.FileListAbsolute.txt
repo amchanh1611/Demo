@@ -1,0 +1,17 @@
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.Helper.deps.json
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.Helper.dll
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.Helper.pdb
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.DTO.dll
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.Models.dll
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.DTO.pdb
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\bin\Debug\net6.0\Demo.Models.pdb
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.csproj.AssemblyReference.cache
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.AssemblyInfoInputs.cache
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.AssemblyInfo.cs
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.csproj.CoreCompileInputs.cache
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.csproj.CopyComplete
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.dll
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\refint\Demo.Helper.dll
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\Demo.Helper.pdb
+C:\Users\PC 01\Desktop\MinhChanh\demo\Demo.Helper\obj\Debug\net6.0\ref\Demo.Helper.dll
