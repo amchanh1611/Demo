@@ -20,8 +20,16 @@ namespace Demo.BUS.BUS
 
         public bool Create(CreateUserRequest request)
         {
-            request.Password = BC.HashPassword(request.Password);
+            //request.Password = BC.HashPassword(request.Password);
             User user = mapper.Map<User>(request);
+            using (var memoryStream = new MemoryStream())
+            {
+                request.Avatar.CopyTo(memoryStream);
+                if(memoryStream.Length < 2097152)
+                {
+                    user.Avatar = memoryStream.ToArray();
+                }
+            }
             return userRepository.Create(user);
         }
 

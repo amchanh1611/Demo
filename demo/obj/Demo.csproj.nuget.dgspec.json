@@ -70,10 +70,6 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.2.2, )"
-            },
-            "Microsoft.AspNet.WebHelpers": {
-              "target": "Package",
-              "version": "[3.2.9, )"
             }
           },
           "imports": [
@@ -154,6 +150,10 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.2.2, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
             }
           },
           "imports": [

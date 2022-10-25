@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8yEjx7/Srta2xdewPFGQf+/4HES1DvKA7CoE/sTEwfEckIohNzkpHaiqB8irP0qqIMdH6gSe6iWtN+ggwvW3AQ==",
+  "dgSpecHash": "JuiWgK3Y0LFk6bDIWceoVm6tBXLiodCaVqqf4fdP0+CicDd/t93S1mbccNw5u/eGePfC1gDvHnnxYhJ+MvI+Sw==",
   "success": true,
   "projectFilePath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj",
   "expectedPackageFiles": [
@@ -9,10 +9,12 @@
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\fluentvalidation\\11.2.2\\fluentvalidation.11.2.2.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.2.2\\fluentvalidation.dependencyinjectionextensions.11.2.2.nupkg.sha512",
+    "C:\\Users\\Minh Chanh\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\Minh Chanh\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512",
     "C:\\Users\\Minh Chanh\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []

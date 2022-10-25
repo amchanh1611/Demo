@@ -1,7 +1,9 @@
-﻿namespace Demo.DTO
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Demo.DTO
 {
     public class CreateUserRequest : BaseUserRequest
     {
-        public IFormFile FormFile { get; set; }
+        public IFormFile Avatar { get; set; }
     }
 }
