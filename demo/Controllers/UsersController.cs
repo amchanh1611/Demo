@@ -29,6 +29,7 @@ namespace Demo.Controllers
                 {
                     Console.WriteLine("Property {0} failed validation. Error: {1}", error.PropertyName, error.ErrorMessage);
                 }
+                return BadRequest();
             }
             bool result = userBUS.Create(request);
             if (result)
