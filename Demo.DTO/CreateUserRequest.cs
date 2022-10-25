@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Demo.DTO
+﻿namespace Demo.DTO
 {
     public class CreateUserRequest : BaseUserRequest
     {
-       
+        public IFormFile FormFile { get; set; }
     }
 }

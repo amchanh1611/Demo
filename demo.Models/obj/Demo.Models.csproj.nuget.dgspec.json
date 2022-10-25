@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj": {}
+    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj": {
+    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj",
+        "projectUniqueName": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj",
         "projectName": "Demo.Models",
-        "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj",
-        "packagesPath": "C:\\Users\\PC 01\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\obj\\",
+        "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj",
+        "packagesPath": "C:\\Users\\Minh Chanh\\.nuget\\packages\\",
+        "outputPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\PC 01\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Minh Chanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -56,9 +56,25 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.2.2, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.2.2, )"
+            },
             "Microsoft.AspNetCore.Http.Extensions": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Microsoft.AspNetCore.Mvc.RazorPages": {
+              "target": "Package",
+              "version": "[2.2.5, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -85,8 +101,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -95,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

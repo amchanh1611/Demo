@@ -1,8 +1,8 @@
 ﻿using Demo.BUS.IBUS;
 using Demo.DTO;
-using Microsoft.AspNetCore.Http;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Demo.Controllers
 {
@@ -11,26 +11,40 @@ namespace Demo.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserBUS userBUS;
-        public UsersController(IUserBUS userBUS)
+        private readonly IValidator<CreateUserRequest> validator;
+
+        public UsersController(IUserBUS userBUS, IValidator<CreateUserRequest> validator)
         {
             this.userBUS = userBUS;
+            this.validator = validator;
         }
+
         [HttpPost]
         public ActionResult Create([FromForm] CreateUserRequest request)
         {
+            ValidationResult validationResult = validator.Validate(request);
+            if(!validationResult.IsValid)
+            {
+                foreach(var error in validationResult.Errors)
+                {
+                    Console.WriteLine("Property {0} failed validation. Error: {1}", error.PropertyName, error.ErrorMessage);
+                }
+            }
             bool result = userBUS.Create(request);
             if (result)
                 return Ok();
             return BadRequest("Eror");
         }
+
         [HttpGet]
         public ActionResult GetList()
         {
             List<ResponseUser> result = userBUS.GetList();
-            if (result!= null)
+            if (result != null)
                 return Ok(result);
             return BadRequest("Eror");
         }
+
         [HttpGet("{userId}")]
         public ActionResult Get([FromRoute] int userId)
         {
@@ -39,6 +53,7 @@ namespace Demo.Controllers
                 return Ok(result);
             return BadRequest("Eror");
         }
+
         [HttpPost("Login")]
         public ActionResult Login([FromForm] LoginRequest request)
         {
@@ -47,14 +62,16 @@ namespace Demo.Controllers
                 return Ok();
             return BadRequest("Eror");
         }
+
         [HttpPut("{userId}")]
-        public ActionResult Upadte([FromRoute] int userId,[FromForm] UpdateUserRequest request)
+        public ActionResult Upadte([FromRoute] int userId, [FromForm] UpdateUserRequest request)
         {
-            bool result = userBUS.Update(userId,request);
+            bool result = userBUS.Update(userId, request);
             if (result)
                 return Ok();
             return BadRequest("Eror");
         }
+
         [HttpDelete("{userId}")]
         public ActionResult Delete([FromRoute] int userId)
         {
