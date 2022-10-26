@@ -8,5 +8,6 @@ namespace Demo.DTO
 {
     public class UpdateUserRequest : BaseUserRequest
     {
+        public Byte[]? Avatar { get; set; }
     }
 }

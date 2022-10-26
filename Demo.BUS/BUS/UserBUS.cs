@@ -4,12 +4,14 @@ using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Repository.IRepository;
 using BC = BCrypt.Net.BCrypt;
+
 namespace Demo.BUS.BUS
 {
     public class UserBUS : IUserBUS
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+
         public UserBUS(IUserRepository userRepository, IMapper mapper)
         {
             this.userRepository = userRepository;
@@ -18,10 +20,17 @@ namespace Demo.BUS.BUS
 
         public bool Create(CreateUserRequest request)
         {
-            request.Password = BC.HashPassword(request.Password);
+            //request.Password = BC.HashPassword(request.Password);
             User user = mapper.Map<User>(request);
+            using (var memoryStream = new MemoryStream())
+            {
+                request.Avatar.CopyTo(memoryStream);
+                if(memoryStream.Length < 2097152)
+                {
+                    user.Avatar = memoryStream.ToArray();
+                }
+            }
             return userRepository.Create(user);
-
         }
 
         public bool Delete(int userId)
@@ -50,8 +59,8 @@ namespace Demo.BUS.BUS
 
         public bool Update(int userId, UpdateUserRequest request)
         {
-            User user = userRepository.Get(userId); 
-            request.Password=BC.HashPassword(request.Password);
+            User user = userRepository.Get(userId);
+            request.Password = BC.HashPassword(request.Password);
             user = mapper.Map(request, user);
             return userRepository.Upadte(user);
         }
