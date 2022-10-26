@@ -1,6 +1,6 @@
 # Build results
-demo/[Bb]in/
-demo/[Oo]bj/
+demo/bin/
+demo/obj/
 Demo.DTO/[Bb]in/
 Demo.DTO/[Oo]bj/
 # Visual Studio 2015/2017 cache/options directory
