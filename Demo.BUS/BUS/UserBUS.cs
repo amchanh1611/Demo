@@ -33,11 +33,6 @@ namespace Demo.BUS.BUS
         {
             List<User> lstUser = userRepository.GetList();
             List<ResponseUser> lstResponse = mapper.Map<List<User>, List<ResponseUser>>(lstUser);
-
-            //foreach (var user in lstUser)
-            //{
-            //    lstResponse.Add(mapper.Map<ResponseUser>(user));
-            //}
             return lstResponse;
         }
 
