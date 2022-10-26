@@ -1,0 +1,5 @@
+# Build results
+demo/[Bb]in/
+demo/[Oo]bj/
+# Visual Studio 2015/2017 cache/options directory
+.vs/

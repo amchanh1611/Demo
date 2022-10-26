@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.BUS\\Demo.BUS.csproj": {}
+    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.BUS\\Demo.BUS.csproj": {}
   },
   "projects": {
-    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.BUS\\Demo.BUS.csproj": {
+    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.BUS\\Demo.BUS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.BUS\\Demo.BUS.csproj",
+        "projectUniqueName": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.BUS\\Demo.BUS.csproj",
         "projectName": "Demo.BUS",
-        "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.BUS\\Demo.BUS.csproj",
-        "packagesPath": "C:\\Users\\Minh Chanh\\.nuget\\packages\\",
-        "outputPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.BUS\\obj\\",
+        "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.BUS\\Demo.BUS.csproj",
+        "packagesPath": "C:\\Users\\PC 01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.BUS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Minh Chanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC 01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,11 +32,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj": {
-                "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj"
+              "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj": {
+                "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj"
               },
-              "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.Repository\\Demo.Repository.csproj": {
-                "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.Repository\\Demo.Repository.csproj"
+              "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.Repository\\Demo.Repository.csproj": {
+                "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.Repository\\Demo.Repository.csproj"
               }
             }
           }
@@ -78,7 +78,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -87,24 +88,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj": {
+    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj",
+        "projectUniqueName": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj",
         "projectName": "Demo.DTO",
-        "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj",
-        "packagesPath": "C:\\Users\\Minh Chanh\\.nuget\\packages\\",
-        "outputPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\obj\\",
+        "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj",
+        "packagesPath": "C:\\Users\\PC 01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Minh Chanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC 01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -162,7 +163,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -171,24 +173,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj": {
+    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj",
+        "projectUniqueName": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj",
         "projectName": "Demo.Models",
-        "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj",
-        "packagesPath": "C:\\Users\\Minh Chanh\\.nuget\\packages\\",
-        "outputPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\obj\\",
+        "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj",
+        "packagesPath": "C:\\Users\\PC 01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Minh Chanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC 01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -272,7 +274,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -281,24 +284,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.Repository\\Demo.Repository.csproj": {
+    "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.Repository\\Demo.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.Repository\\Demo.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.Repository\\Demo.Repository.csproj",
         "projectName": "Demo.Repository",
-        "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.Repository\\Demo.Repository.csproj",
-        "packagesPath": "C:\\Users\\Minh Chanh\\.nuget\\packages\\",
-        "outputPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.Repository\\obj\\",
+        "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.Repository\\Demo.Repository.csproj",
+        "packagesPath": "C:\\Users\\PC 01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Minh Chanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC 01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -313,11 +316,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj": {
-                "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\Demo.DTO\\Demo.DTO.csproj"
+              "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj": {
+                "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\Demo.DTO\\Demo.DTO.csproj"
               },
-              "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj": {
-                "projectPath": "Z:\\Minh Chánh\\Tui\\learning\\asp.net\\Practice\\MinhChanh\\Demo\\demo.Models\\Demo.Models.csproj"
+              "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj": {
+                "projectPath": "C:\\Users\\PC 01\\Desktop\\MinhChanh\\demo\\demo.Models\\Demo.Models.csproj"
               }
             }
           }
@@ -359,7 +362,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -368,7 +372,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
