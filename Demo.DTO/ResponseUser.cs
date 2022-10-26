@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,6 @@ namespace Demo.DTO
         public string? Email { get; set; }
         public int? Phone { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public Byte[]? Avatar { get; set; }
+        public string? FormFile { get; set; }
     }
 }

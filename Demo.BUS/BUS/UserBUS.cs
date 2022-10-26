@@ -3,6 +3,8 @@ using demo.Models;
 using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Repository.IRepository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using BC = BCrypt.Net.BCrypt;
 
 namespace Demo.BUS.BUS
@@ -18,17 +20,14 @@ namespace Demo.BUS.BUS
             this.mapper = mapper;
         }
 
-        public bool Create(CreateUserRequest request)
+        public async Task<bool> CreateAsync(CreateUserRequest request)
         {
-            //request.Password = BC.HashPassword(request.Password);
             User user = mapper.Map<User>(request);
-            using (var memoryStream = new MemoryStream())
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Avatar", request.FormFile.FileName);
+            user.Avatar = path;
+            using (Stream stream = new FileStream(path,FileMode.Create))
             {
-                request.Avatar.CopyTo(memoryStream);
-                if(memoryStream.Length < 2097152)
-                {
-                    user.Avatar = memoryStream.ToArray();
-                }
+                await request.FormFile.CopyToAsync(stream);
             }
             return userRepository.Create(user);
         }
@@ -49,6 +48,21 @@ namespace Demo.BUS.BUS
         {
             User user = userRepository.Get(userId);
             ResponseUser response = mapper.Map<ResponseUser>(user);
+            //var content = new System.IO.MemoryStream(user.Avatar);
+            var path = Path.Combine(
+                   Directory.GetCurrentDirectory(), "wwwroot",
+                  user.Avatar);
+            //using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            //{
+            //    content.CopyToAsync(fileStream);
+            //}
+            MemoryStream memoryStream = new MemoryStream();
+            using (var stream = new FileStream(path,FileMode.Open))
+            {
+                stream.CopyTo(memoryStream);
+            }
+            memoryStream.Position = 0;
+            //response.FormFile = IFormFile()
             return response;
         }
 

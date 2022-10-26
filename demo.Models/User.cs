@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace demo.Models
@@ -16,6 +17,6 @@ namespace demo.Models
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public Byte[]? Avatar { get; set; }
+        public string? Avatar { get; set; }
     }
 }

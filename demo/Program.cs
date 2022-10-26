@@ -1,12 +1,13 @@
 using demo.Models;
 using Demo.BUS.BUS;
 using Demo.BUS.IBUS;
+using Demo.DTO;
 using Demo.Helper.AutoMapperProfiles;
 using Demo.Repository.IRepository;
 using Demo.Repository.Repository;
-using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using Demo.Helper.FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,9 @@ builder.Services.AddAutoMapper(typeof(UserProfile));
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBUS, UserBUS>();
-builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+builder.Services.AddFluentValidationAutoValidation()
+            .AddFluentValidationClientsideAdapters()
+            .AddValidatorsFromAssemblyContaining(typeof(UserValidator));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,7 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -1,27 +1,28 @@
 ﻿using AutoMapper;
-using Demo.DTO;
 using demo.Models;
+using Demo.DTO;
+using Microsoft.AspNetCore.Http;
 using BC = BCrypt.Net.BCrypt;
 namespace Demo.Helper.AutoMapperProfiles
 {
     public class UserProfile : Profile
     {
         public UserProfile()
-        { 
-            CreateMap<CreateUserRequest, User>();
+        {
+            CreateMap<CreateUserRequest, User>()
+                .ForMember(dest => dest.Password, src => src.MapFrom(m => BC.HashPassword(m.Password)));
+            //.ForMember(dest => dest.Avatar,src => src.MapFrom(m=>m.Avatar)).ConvertUsing(new FileTypeConverter());
             CreateMap<UpdateUserRequest, User>();
             CreateMap<User, ResponseUser>();
         }
-    }
-    public interface IValueResolver<in TSource, in TDestination, TDestMember>
-    {
-        TDestMember Resolve(TSource source, TDestination destination, TDestMember destMember, ResolutionContext context);
-    }
-    public class RequestMappingUser : IValueResolver<CreateUserRequest, User, string>
-    {
-        public string Resolve(CreateUserRequest source, User destination, string destMember, ResolutionContext context)
-        {
-            return source.Password = BC.HashPassword(source.Password);
-        }
+        //public class FileTypeConverter : ITypeConverter<IFormFile, byte[]>
+        //{
+        //    public byte[] Convert(IFormFile source, byte[] destination, ResolutionContext context)
+        //    {
+        //        MemoryStream memory = new MemoryStream();
+        //        source.CopyTo(memory);
+        //        return memory.ToArray();
+        //    }
+        //}
     }
 }

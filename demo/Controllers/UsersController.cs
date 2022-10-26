@@ -1,7 +1,6 @@
 ﻿using Demo.BUS.IBUS;
 using Demo.DTO;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
@@ -20,18 +19,9 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([FromForm] CreateUserRequest request)
+        public async Task<IActionResult> Create([FromForm] CreateUserRequest request)
         {
-            ValidationResult validationResult = validator.Validate(request);
-            if(!validationResult.IsValid)
-            {
-                foreach(var error in validationResult.Errors)
-                {
-                    Console.WriteLine("Property {0} failed validation. Error: {1}", error.PropertyName, error.ErrorMessage);
-                }
-                return BadRequest();
-            }
-            bool result = userBUS.Create(request);
+            bool result = await userBUS.CreateAsync(request);
             if (result)
                 return Ok();
             return BadRequest("Eror");
