@@ -1,7 +1,15 @@
 # Build results
-demo/bin/
-demo/obj/
+demo/[Bb]in/
+demo/[Oo]bj/
 Demo.DTO/[Bb]in/
 Demo.DTO/[Oo]bj/
+Demo.BUS/[Bb]in/
+Demo.BUS/[Oo]bj/
+Demo.Helper/[Bb]in/
+Demo.Helper/[Oo]bj/
+demo.Models/[Bb]in/
+demo.Models/[Oo]bj/
+Demo.Repository/[Bb]in/
+Demo.Repository/[Oo]bj/
 # Visual Studio 2015/2017 cache/options directory
 .vs/
