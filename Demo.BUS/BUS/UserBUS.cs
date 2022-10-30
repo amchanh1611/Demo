@@ -4,7 +4,6 @@ using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using BC = BCrypt.Net.BCrypt;
 
 namespace Demo.BUS.BUS
@@ -20,12 +19,15 @@ namespace Demo.BUS.BUS
             this.mapper = mapper;
         }
 
-        public async Task<bool> CreateAsync(CreateUserRequest request)
+        public async Task<bool> CreateAsync(HttpContext context, CreateUserRequest request)
         {
             User user = mapper.Map<User>(request);
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Avatar", request.FormFile.FileName);
-            user.Avatar = path;
-            using (Stream stream = new FileStream(path,FileMode.Create))
+
+            string absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Avatar", request.FormFile.FileName);
+
+            string relativePath = Path.Combine((context.Request.Host).ToString(), "wwwroot/Avatar", request.FormFile.FileName);
+            user.Avatar = relativePath;
+            using (Stream stream = new FileStream(absolutePath, FileMode.Create))
             {
                 await request.FormFile.CopyToAsync(stream);
             }
@@ -57,7 +59,7 @@ namespace Demo.BUS.BUS
             //    content.CopyToAsync(fileStream);
             //}
             MemoryStream memoryStream = new MemoryStream();
-            using (var stream = new FileStream(path,FileMode.Open))
+            using (var stream = new FileStream(path, FileMode.Open))
             {
                 stream.CopyTo(memoryStream);
             }

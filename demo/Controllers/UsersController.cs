@@ -21,7 +21,8 @@ namespace Demo.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateUserRequest request)
         {
-            bool result = await userBUS.CreateAsync(request);
+            var context = HttpContext;
+            bool result = await userBUS.CreateAsync(context,request);
             if (result)
                 return Ok();
             return BadRequest("Eror");
