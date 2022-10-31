@@ -16,7 +16,7 @@ namespace Demo.DTO
             .WithMessage("Age must be more than 18");
             RuleFor(user => user.FullName).NotNull().WithMessage("Usernam is required");
             RuleFor(user => user.Password).NotEmpty().WithMessage("Usernam is required")
-                .MinimumLength(8).WithMessage("Password is at least 6 charracter")
+                .MinimumLength(8).WithMessage("Password is at least 8 charracter")
                 .Matches(@"[A-Z]").WithMessage("Your password must contain at least one uppercase letter.")
                 .Matches(@"[a-z]").WithMessage("Your password must contain at least one lowercase letter.")
                 .Matches(@"[0-9]").WithMessage("Your password must contain at least one number.")
@@ -28,7 +28,8 @@ namespace Demo.DTO
         private bool BeAValidDate(DateTime date)
         {
             var currentDay = DateTime.Now;
-            if ((date.Day >= currentDay.Day) && (date.Month>= currentDay.Month) && ((currentDay.Year -date.Year) >= 18))
+            var birtday = currentDay.Date - date.Date;
+            if ((birtday.Days/365)>=18)
                 return true;
             return false;
         }

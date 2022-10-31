@@ -5,11 +5,11 @@ namespace Demo.BUS.IBUS
 {
     public interface IUserBUS
     {
-        Task<bool> CreateAsync(HttpContext context, CreateUserRequest request);
+        Task<bool> CreateAsync(CreateUserRequest request);
 
         List<ResponseUser> GetList();
 
-        ResponseUser Get(int userId);
+        ResponseUser Get(HttpContext context,int userId);
 
         bool Update(int userId, UpdateUserRequest userDTO);
 

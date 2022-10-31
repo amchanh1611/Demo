@@ -2,6 +2,9 @@
 using Demo.DTO;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using System.Security.Claims;
 
 namespace Demo.Controllers
 {
@@ -21,8 +24,7 @@ namespace Demo.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateUserRequest request)
         {
-            var context = HttpContext;
-            bool result = await userBUS.CreateAsync(context,request);
+            bool result = await userBUS.CreateAsync(request);
             if (result)
                 return Ok();
             return BadRequest("Eror");
@@ -40,7 +42,8 @@ namespace Demo.Controllers
         [HttpGet("{userId}")]
         public ActionResult Get([FromRoute] int userId)
         {
-            ResponseUser result = userBUS.Get(userId);
+            HttpContext context = HttpContext;
+            ResponseUser result = userBUS.Get(context,userId);
             if (result != null)
                 return Ok(result);
             return BadRequest("Eror");
@@ -71,6 +74,19 @@ namespace Demo.Controllers
             if (result)
                 return Ok();
             return BadRequest("Eror");
+        }
+        [HttpPut("Profile")]
+        public ActionResult UpdateProfile([FromForm] UpdateUserRequest request)
+        {
+            Claim? claim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim == null)
+                return BadRequest("User is invalid");
+            int userId = int.Parse(claim.Value);
+            bool result = userBUS.Update(userId,request);
+            if (result)
+                return Ok();
+            return BadRequest("Update Fail");
+            
         }
     }
 }
