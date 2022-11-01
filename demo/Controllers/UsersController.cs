@@ -2,8 +2,6 @@
 using Demo.DTO;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Security.Claims;
 
 namespace Demo.Controllers
@@ -43,19 +41,19 @@ namespace Demo.Controllers
         public ActionResult Get([FromRoute] int userId)
         {
             HttpContext context = HttpContext;
-            ResponseUser result = userBUS.Get(context,userId);
+            ResponseUser result = userBUS.Get(context, userId);
             if (result != null)
                 return Ok(result);
             return BadRequest("Eror");
         }
 
         [HttpPost("Login")]
-        public ActionResult Login([FromForm] LoginRequest request)
+        public ActionResult Login([FromBody] LoginRequest request)
         {
-            bool result = userBUS.Login(request);
-            if (result)
-                return Ok();
-            return BadRequest("Eror");
+            LoginResponse result = userBUS.Login(request);
+            if (result != null)
+                return Ok(result);
+            return BadRequest("Incorrect username/password");
         }
 
         [HttpPut("{userId}")]
@@ -75,6 +73,7 @@ namespace Demo.Controllers
                 return Ok();
             return BadRequest("Eror");
         }
+
         [HttpPut("Profile")]
         public ActionResult UpdateProfile([FromForm] UpdateUserRequest request)
         {
@@ -82,11 +81,10 @@ namespace Demo.Controllers
             if (claim == null)
                 return BadRequest("User is invalid");
             int userId = int.Parse(claim.Value);
-            bool result = userBUS.Update(userId,request);
+            bool result = userBUS.Update(userId, request);
             if (result)
                 return Ok();
             return BadRequest("Update Fail");
-            
         }
     }
 }

@@ -15,6 +15,6 @@ namespace Demo.BUS.IBUS
 
         bool Delete(int userId);
 
-        bool Login(LoginRequest request);
+        LoginResponse Login(LoginRequest request);
     }
 }

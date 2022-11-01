@@ -15,6 +15,6 @@ namespace Demo.Repository.IRepository
         public bool Create(User user);
         public bool Upadte(User users);
         public bool Delete(int userId);
-        public bool Login(string userName, string password);
+        public User Login(string userName);
     }
 }

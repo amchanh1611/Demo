@@ -2,6 +2,7 @@
 using demo.Models;
 using Demo.BUS.IBUS;
 using Demo.DTO;
+using Demo.Helper.JWT;
 using Demo.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using BC = BCrypt.Net.BCrypt;
@@ -12,10 +13,12 @@ namespace Demo.BUS.BUS
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
-        public UserBUS(IUserRepository userRepository, IMapper mapper)
+        private readonly IJwtUtils jwtUtils;
+        public UserBUS(IUserRepository userRepository, IMapper mapper, IJwtUtils jwtUtils)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
+            this.jwtUtils = jwtUtils;
         }
 
         public async Task<bool> CreateAsync(CreateUserRequest request)
@@ -47,9 +50,13 @@ namespace Demo.BUS.BUS
             return response;
         }
 
-        public bool Login(LoginRequest request)
+        public LoginResponse Login(LoginRequest request)
         {
-            return userRepository.Login(request.UserName, request.Password);
+            User user = userRepository.Login(request.UserName);
+            
+            if (user == null || !BC.Verify(request.Password, user.Password))
+                return null;
+            return new LoginResponse(jwtUtils.GenerateJwtToken(user));
         }
 
         public bool Update(int userId, UpdateUserRequest request)
