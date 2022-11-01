@@ -23,6 +23,9 @@ namespace Demo.BUS.BUS
 
         public async Task<bool> CreateAsync(CreateUserRequest request)
         {
+            User check = userRepository.Login(request.UserName);
+            if (check != null)
+                return false;
             User user = mapper.Map<User>(request);
             user.Avatar = await Helper.Helper.UploadFilesAsync(request.FormFile);
             user.CreatedDate = DateTime.UtcNow;

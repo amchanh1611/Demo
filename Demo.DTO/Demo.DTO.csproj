@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\demo.Models\Demo.Models.csproj" />
+  </ItemGroup>
+
 </Project>
