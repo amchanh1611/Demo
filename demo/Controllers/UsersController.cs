@@ -1,6 +1,8 @@
-﻿using Demo.BUS.IBUS;
+﻿using demo.Models;
+using Demo.BUS.IBUS;
 using Demo.DTO;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -74,13 +76,15 @@ namespace Demo.Controllers
             return BadRequest("Eror");
         }
 
-        [HttpPut("Profile")]
+        [HttpPut("Profile"),Authorize]
         public ActionResult UpdateProfile([FromForm] UpdateUserRequest request)
         {
             Claim? claim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if (claim == null)
-                return BadRequest("User is invalid");
-            int userId = int.Parse(claim.Value);
+            int userId = int.Parse(claim!.Value);
+            //var currentUser = (User)HttpContext.Items["User"];
+            //if(currentUser == null)
+            //    return BadRequest("User is invalid");
+            //int userId=currentUser.Id;
             bool result = userBUS.Update(userId, request);
             if (result)
                 return Ok();

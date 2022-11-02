@@ -24,12 +24,11 @@ namespace Demo.Helper.JWT
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = "http://minhchanh.com",
-                Audience = user.Id.ToString(),
                 Subject = new ClaimsIdentity(new[]
-                { 
-                    //new Claim("id", user.Id.ToString()),
+                {
                     new Claim("userName", user.UserName),
-                    new Claim("email",user.Email)
+                    new Claim("email",user.Email),
+                    new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(5),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
