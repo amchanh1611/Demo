@@ -1,10 +1,14 @@
 ﻿using demo.Models;
 using Demo.BUS.IBUS;
 using Demo.DTO;
+using Demo.Helper.JWT;
+using Demo.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace Demo.Controllers
 {
@@ -13,12 +17,14 @@ namespace Demo.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserBUS userBUS;
-        private readonly IValidator<CreateUserRequest> validator;
+        private readonly ILoginGoogleBUS loginGoogleBUS;
+        private readonly IJwtUtils jwtUtils;
 
-        public UsersController(IUserBUS userBUS, IValidator<CreateUserRequest> validator)
+        public UsersController(IUserBUS userBUS, ILoginGoogleBUS loginGoogleBUS,IJwtUtils jwtUtils)
         {
             this.userBUS = userBUS;
-            this.validator = validator;
+            this.loginGoogleBUS = loginGoogleBUS;
+            this.jwtUtils = jwtUtils;
         }
 
         [HttpPost]
@@ -76,7 +82,7 @@ namespace Demo.Controllers
             return BadRequest("Eror");
         }
 
-        [HttpPut("Profile"),Authorize]
+        [HttpPut("Profile"), Authorize]
         public ActionResult UpdateProfile([FromForm] UpdateUserRequest request)
         {
             Claim? claim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
@@ -89,6 +95,30 @@ namespace Demo.Controllers
             if (result)
                 return Ok();
             return BadRequest("Update Fail");
+        }
+        [HttpPost("LoginGoogle")]
+        public async Task<IActionResult> LoginGoogleAsync(ExternalAuthDto externalAuthDto)
+        {
+            Payload payload = await userBUS.VerifyGoogleToken(externalAuthDto);
+            if (payload == null)
+                return BadRequest("Invalid External Authentication.");
+
+            GoogleLogin user = loginGoogleBUS.FindByCondition(payload.Subject);
+            string token = string.Empty;
+            if(user!=null)
+            {
+                token = jwtUtils.GenerateJwtToken(user.User);
+                return Ok(user);
+            }
+               
+
+            bool createUser = await userBUS.CreateAsync(new CreateUserRequest { FullName = payload.Name, Email = payload.Email, UserName = payload.Email });
+
+            User userNewCreate = userBUS.FindByEmail(payload.Email);
+            bool createGoogleLogin = loginGoogleBUS.Create(new GoogleLogin { Key = payload.Subject, UserId = userNewCreate.Id });
+
+            token = jwtUtils.GenerateJwtToken(userNewCreate);
+            return Ok(new LoginResponse(token));
         }
     }
 }

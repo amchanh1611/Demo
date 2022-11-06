@@ -4,7 +4,10 @@ using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Helper.JWT;
 using Demo.Repository.IRepository;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 using BC = BCrypt.Net.BCrypt;
 
 namespace Demo.BUS.BUS
@@ -14,11 +17,14 @@ namespace Demo.BUS.BUS
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
         private readonly IJwtUtils jwtUtils;
-        public UserBUS(IUserRepository userRepository, IMapper mapper, IJwtUtils jwtUtils)
+        private readonly IConfigurationSection google;
+        private readonly IConfiguration configuration;
+        public UserBUS(IUserRepository userRepository, IMapper mapper, IJwtUtils jwtUtils, IConfiguration configuration)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
             this.jwtUtils = jwtUtils;
+            this.google = configuration.GetSection("Google");
         }
 
         public async Task<bool> CreateAsync(CreateUserRequest request)
@@ -27,7 +33,10 @@ namespace Demo.BUS.BUS
             //if (check != null)
             //    return false;
             User user = mapper.Map<User>(request);
-            user.Avatar = await Helper.Helper.UploadFilesAsync(request.FormFile);
+            if(request.FormFile != null)
+            {
+                user.Avatar = await Helper.Helper.UploadFilesAsync(request.FormFile);
+            }
             user.CreatedDate = DateTime.UtcNow;
             return userRepository.Create(user);
         }
@@ -69,6 +78,26 @@ namespace Demo.BUS.BUS
             user = mapper.Map(request, user);
             return userRepository.Upadte(user);
         }
-        
+
+        public async Task<Payload> VerifyGoogleToken(ExternalAuthDto externalAuth)
+        {
+            //Settings used when validating a JSON Web Signature.
+            ValidationSettings settings = new()
+            {
+                //GetSection : Gets a configuration sub-section with the specified key.
+                Audience = new List<string>() { google.GetSection("clientId").Value }
+            };
+        // Validates a Google-issued Json Web Token (JWT)
+        //Returns:
+        //     The payload of the verified token.
+            Payload payload = await ValidateAsync(externalAuth.IdToken, settings);
+
+            return payload;
+        }
+
+        public User FindByEmail(string email)
+        {
+            return userRepository.FindByEmail(email);
+        }
     }
 }

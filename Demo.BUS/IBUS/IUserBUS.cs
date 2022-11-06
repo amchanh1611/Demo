@@ -1,5 +1,7 @@
-﻿using Demo.DTO;
+﻿using demo.Models;
+using Demo.DTO;
 using Microsoft.AspNetCore.Http;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace Demo.BUS.IBUS
 {
@@ -16,5 +18,7 @@ namespace Demo.BUS.IBUS
         bool Delete(int userId);
 
         LoginResponse Login(LoginRequest request);
+        Task<Payload> VerifyGoogleToken(ExternalAuthDto externalAuth);
+        User FindByEmail(string email);
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using demo.Models;
 
@@ -10,9 +11,10 @@ using demo.Models;
 namespace demo.Models.Migrations
 {
     [DbContext(typeof(DemoDbContext))]
-    partial class DemoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221106133651_CreateGoogleLoginModel")]
+    partial class CreateGoogleLoginModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,7 @@ namespace demo.Models.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -58,15 +60,18 @@ namespace demo.Models.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Phone")
                         .HasColumnType("longtext");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -78,7 +83,9 @@ namespace demo.Models.Migrations
                 {
                     b.HasOne("demo.Models.User", "User")
                         .WithOne("GoogleLogin")
-                        .HasForeignKey("Demo.Models.GoogleLogin", "UserId");
+                        .HasForeignKey("Demo.Models.GoogleLogin", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

@@ -14,7 +14,7 @@ namespace Demo.Repository.Repository
 
         public bool Create(User user)
         {
-            var query = context.users.Add(user);
+            context.users.Add(user);
             var check = context.SaveChanges();
             return check > 0 ? true : false;
         }
@@ -47,6 +47,11 @@ namespace Demo.Repository.Repository
             context.Update(Request);
             var check = context.SaveChanges();
             return check > 0 ? true : false;
+        }
+
+        public User FindByEmail(string email)
+        {
+            return context.users.Where(x => x.Email == email).FirstOrDefault();
         }
     }
 }

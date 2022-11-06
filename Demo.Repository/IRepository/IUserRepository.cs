@@ -10,11 +10,13 @@ namespace Demo.Repository.IRepository
 {
     public interface IUserRepository
     {
-        public List<User> GetList();
-        public User Get(int userID);
-        public bool Create(User user);
-        public bool Upadte(User users);
-        public bool Delete(int userId);
-        public User Login(string userName);
+        List<User> GetList();
+        User Get(int userID);
+        bool Create(User user);
+        bool Upadte(User users);
+        bool Delete(int userId);
+        User Login(string userName);
+        User FindByEmail(string email);
+        
     }
 }

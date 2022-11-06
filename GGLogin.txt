@@ -1,0 +1,38 @@
+https://code-maze.com/how-to-sign-in-with-google-angular-aspnet-webapi/
+
+https://github.com/CodeMazeBlog/angular-identity-aspnetcore-security/tree/angular-google-authentication-identity/Web%20API
+
+https://github.com/ionutneagos/social-login-web-api/tree/master/src/Server
+
+Đăng kí ứng dụng của mình với bên API Google => đăng kí xong thì mình sẽ có được ClientId do gg cung cấp
+
+sau đó Front-end sẽ xử lí cho phần đăng nhập bằng gg, nếu người dùng chọn đăng nhập với tài khoản gg của mình thì bên gg sẽ return về cho chúng ta
+1 user object chứ những thông tin của user
+
+The user object returned from Google Account
+
+{id: "108223206370324493495", name: "Testing Mail", email: "codemazetest@gmail.com", photoUrl: …}
+authToken: "ya29.a0AfH6SMB_pXBrYm1wdIB3v-uAGohuXWDKfmsszvsFxuH4hn-gW7E5tf1IW4v32rgJbY6cEDsYgxcsWoVAfSs2ono..."
+email: "codemazetest@gmail.com"
+firstName: "Testing"
+id: "108223206370324493495"
+idToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJjNDk1MzBlMWZmOTA4M2RkNWV..."
+lastName: "Mail"
+name: "Testing Mail"
+photoUrl: "https://lh6.googleusercontent.com/-URt2WpWJqRw/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmGZsYnDp0Ow4ubf2H-lN8kScXsYA/s96-c/photo.jpg"
+provider: "GOOGLE"
+response: Ew {NT: "108223206370324493495", Ad: "Testing Mail", tV: "Testing", uT: "Mail", TJ: "https://lh6.googleusercontent., …}
+__proto__: Object
+
+Trong đây sẽ có idToken và Provider
+
+"? có bài còn sử dụng ClientSerect ?"
+
+Cách cài: 
+1. cần 1 dto { provider,idToken } để nhận request từ frond-end
+2. cài đặt AppSetting cho phần google chứa client Id do chúng ta chỉ định cho ứng dụng của mình
+3. Viết phương thức VerifyGoogleToken nhận tham số truyền vào là Dto ở trên và return Payload của token chứa thông tin của người dùng
+  1. tạo 1 đối tượng validatioSetting truyền clientId được cấu hình từ appSettings vào Audience
+     (việc truyền vào clientId đảm bảo việc xác thực token là của ứng dụng của mình) 
+  2. gọi method ValidateAsync nhận tham số truyền vào là IdToken từ dto request và đối tượng validationSettings để validate token từ google
+     nếu token hợp lệ sẽ return Payload của token chứa thông tin của người dùng

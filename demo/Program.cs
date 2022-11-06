@@ -33,6 +33,8 @@ builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBUS, UserBUS>();
 builder.Services.AddTransient<IJwtUtils, JwtUtils>();
+builder.Services.AddTransient<ILoginGoogleBUS, LoginGoogleBUS>();
+builder.Services.AddTransient<ILoginGoogleRepository, LoginGoogleRepository>();
 
 //Fluent Validation
 builder.Services.AddFluentValidationAutoValidation()
@@ -41,7 +43,7 @@ builder.Services.AddFluentValidationAutoValidation()
 //AppSettings
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-//JwtBearer
+//Add JwtBearer
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
