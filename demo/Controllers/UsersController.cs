@@ -105,10 +105,11 @@ namespace Demo.Controllers
 
             GoogleLogin user = loginGoogleBUS.FindByCondition(payload.Subject);
             string token = string.Empty;
-            if(user!=null)
+            if(user==null)
             {
+
                 token = jwtUtils.GenerateJwtToken(user.User);
-                return Ok(user);
+                return Ok(new LoginResponse(token));
             }
                
 
