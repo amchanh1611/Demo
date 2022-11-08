@@ -49,9 +49,9 @@ namespace Demo.Repository.Repository
             return check > 0 ? true : false;
         }
 
-        public User FindByEmail(string email)
+        public User FindByLoginGoogle(string email,string provider)
         {
-            return context.users.Where(x => x.Email == email).FirstOrDefault();
+            return context.users.Where(x => x.Email == email&&x.Provider==provider).FirstOrDefault();
         }
     }
 }

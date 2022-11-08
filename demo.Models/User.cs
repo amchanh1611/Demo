@@ -1,9 +1,4 @@
-﻿using Demo.Models;
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace demo.Models
+﻿namespace demo.Models
 {
     public class User
     {
@@ -16,6 +11,7 @@ namespace demo.Models
         public string? Phone { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? Avatar { get; set; }
-        public GoogleLogin? GoogleLogin { get; set; }
+        public string Provider { get; set; } = default!;
+        //public string? ProviderKey { get; set; }
     }
 }

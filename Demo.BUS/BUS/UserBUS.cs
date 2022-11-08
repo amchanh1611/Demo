@@ -29,9 +29,6 @@ namespace Demo.BUS.BUS
 
         public async Task<bool> CreateAsync(CreateUserRequest request)
         {
-            //User check = userRepository.Login(request.UserName);
-            //if (check != null)
-            //    return false;
             User user = mapper.Map<User>(request);
             if(request.FormFile != null)
             {
@@ -95,9 +92,9 @@ namespace Demo.BUS.BUS
             return payload;
         }
 
-        public User FindByEmail(string email)
+        public User FindByLoginGoogle(string email,string provider)
         {
-            return userRepository.FindByEmail(email);
+            return userRepository.FindByLoginGoogle(email, provider);
         }
     }
 }

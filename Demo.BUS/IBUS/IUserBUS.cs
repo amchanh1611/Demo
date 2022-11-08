@@ -19,6 +19,6 @@ namespace Demo.BUS.IBUS
 
         LoginResponse Login(LoginRequest request);
         Task<Payload> VerifyGoogleToken(ExternalAuthDto externalAuth);
-        User FindByEmail(string email);
+        User FindByLoginGoogle(string email, string provider);
     }
 }

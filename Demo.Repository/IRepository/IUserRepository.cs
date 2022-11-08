@@ -16,7 +16,7 @@ namespace Demo.Repository.IRepository
         bool Upadte(User users);
         bool Delete(int userId);
         User Login(string userName);
-        User FindByEmail(string email);
+        User FindByLoginGoogle(string email, string provider);
         
     }
 }

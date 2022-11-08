@@ -16,5 +16,6 @@ namespace Demo.DTO
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public IFormFile? FormFile { get; set; }
+        public string Provider { get; set; } = default!;
     }
 }

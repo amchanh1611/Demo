@@ -21,9 +21,9 @@ namespace Demo.DTO
             RuleFor(user => user.Email).EmailAddress().WithMessage("Email is not valid");
             RuleFor(user => user.Birtday)
                 .Must((_, date) => {
-                    var currentDay = DateTime.Now;
-                    var birtday = currentDay.Date - date.Date;
-                    if ((birtday.Days / 365) >= 18)
+                    DateTime currentDay = DateTime.Now;
+                    TimeSpan birtday = currentDay.Date - date.Date;
+                    if ((int)Math.Floor(birtday.Days / (double)365) >= 18)
                         return true;
                     return false;
                 })
@@ -36,14 +36,6 @@ namespace Demo.DTO
                 .Matches("[0-9]").WithMessage("Your password must contain at least one number.")
                 .Matches(@"[""!@$%^&*(){}:;<>,.?/+\-_=|'[\]~\\]").WithMessage("{PropertyName} must contain at least one special character");
         }
-        //private bool BeAValidDate(DateTime date)
-        //{
-        //    var currentDay = DateTime.Now;
-        //    var birtday = currentDay.Date - date.Date;
-        //    if ((birtday.Days / 365) >= 18)
-        //        return true;
-        //    return false;
-        //}
     }
    
 }

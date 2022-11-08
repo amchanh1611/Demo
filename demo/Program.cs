@@ -33,8 +33,6 @@ builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBUS, UserBUS>();
 builder.Services.AddTransient<IJwtUtils, JwtUtils>();
-builder.Services.AddTransient<ILoginGoogleBUS, LoginGoogleBUS>();
-builder.Services.AddTransient<ILoginGoogleRepository, LoginGoogleRepository>();
 
 //Fluent Validation
 builder.Services.AddFluentValidationAutoValidation()
