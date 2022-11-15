@@ -1,11 +1,11 @@
-﻿using demo.Models;
+﻿using Demo.AppSettings;
 using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Helper.JWT;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Security.Claims;
-using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace Demo.Controllers
 {
@@ -15,11 +15,13 @@ namespace Demo.Controllers
     {
         private readonly IUserBUS userBUS;
         private readonly IJwtUtils jwtUtils;
+        private readonly GoogleSettings google;
 
-        public UsersController(IUserBUS userBUS, IJwtUtils jwtUtils)
+        public UsersController(IUserBUS userBUS, IJwtUtils jwtUtils, IOptions<GoogleSettings> google)
         {
             this.userBUS = userBUS;
             this.jwtUtils = jwtUtils;
+            this.google = google.Value;
         }
 
         [HttpPost]
@@ -77,6 +79,14 @@ namespace Demo.Controllers
             return BadRequest("Eror");
         }
 
+        [HttpGet("LoginLink")]
+        public IActionResult LoginLink()
+        {
+            LinkLoginGoogle link = new();
+            link.Link = $"{google.IdentityPlatform.AuthUri}&{google.RedirectUri}&{google.ClientId}";
+            return Ok(link);
+        }
+
         [HttpPut("Profile"), Authorize]
         public ActionResult UpdateProfile([FromForm] UpdateUserRequest request)
         {
@@ -88,30 +98,55 @@ namespace Demo.Controllers
             return BadRequest("Update Fail");
         }
 
-        [HttpPost("LoginGoogle")]
-        public async Task<IActionResult> LoginGoogleAsync(ExternalAuthDto externalAuthDto)
+        [HttpGet("LoginGoogle")]
+        public async Task<IActionResult> LoginGoogleAsync()
         {
-            Payload payload = await userBUS.VerifyGoogleToken(externalAuthDto);
-            if (payload == null)
-                return BadRequest("Invalid External Authentication.");
+            StringContent content = new StringContent("");
+            HttpClient client = new();
+            //HttpResponseMessage response = await client.PostAsync($"{google.IdentityPlatform.AuthUri}&{google.RedirectUri}&{google.ClientId}",content);
+            HttpResponseMessage response = await client.GetAsync("https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=http://localhost:9000/api/Users/LoginGoogle&client_id=634932227060-2cdka612v49ginvt7mq7no4v79m5d80r.apps.googleusercontent.com");
 
-            User user = userBUS.FindByLoginGoogle(payload.Email, externalAuthDto.Provider);
-            string token = jwtUtils.GenerateJwtToken(user);
+            
 
-            if (user != null)
-                return Ok(token);
+            var location = response.Headers.Location;
+            
 
-            bool check = await userBUS.CreateAsync(new CreateUserRequest
+            if (response.IsSuccessStatusCode)
             {
-                Email = payload.Email,
-                UserName = payload.Email,
-                FullName = payload.Name,
-                Provider = externalAuthDto.Provider
-            });
-            if (check)
-                return Ok(token);
+                foreach (var hearder in response.Headers)
+                {
+                    Console.WriteLine(hearder);
+                }
+            }
+            if (response.Headers != null)
+                return Ok(response.Headers);
             return BadRequest();
-
         }
+
+        //[HttpPost("LoginGoogle")]
+        //public async Task<IActionResult> LoginGoogleAsync(ExternalAuthDto externalAuthDto)
+        //{
+        //    Payload payload = await userBUS.VerifyGoogleToken(externalAuthDto);
+        //    if (payload == null)
+        //        return BadRequest("Invalid External Authentication.");
+
+        //    User user = userBUS.FindByLoginGoogle(payload.Email, externalAuthDto.Provider);
+        //    string token = jwtUtils.GenerateJwtToken(user);
+
+        //    if (user != null)
+        //        return Ok(token);
+
+        //    bool check = await userBUS.CreateAsync(new CreateUserRequest
+        //    {
+        //        Email = payload.Email,
+        //        UserName = payload.Email,
+        //        FullName = payload.Name,
+        //        Provider = externalAuthDto.Provider
+        //    });
+        //    if (check)
+        //        return Ok(token);
+        //    return BadRequest();
+
+        //}
     }
 }

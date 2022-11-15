@@ -1,2 +1,0 @@
-?lúc nào cái cục data từ google reuturn về cũng đầy đủ các trường dử liệu, có bao giờ thiếu trường nào không,
- ví dụ như thiếu email, hay provider.Key, IdClient của user từ gg?
