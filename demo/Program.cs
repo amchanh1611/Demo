@@ -26,6 +26,7 @@ builder.Services.AddSwaggerGen();
 //AppSettings
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.Configure<GoogleSettings>(builder.Configuration.GetSection("GoogleSettings"));
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 
 builder.Services.AddDbContextPool<DemoDbContext>(option =>
     option.UseMySql("server=localhost;user id=root;password='';port=3306;database=demo;",

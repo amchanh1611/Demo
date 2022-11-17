@@ -9,21 +9,6 @@ https://github.com/ionutneagos/social-login-web-api/tree/master/src/Server
 sau đó Front-end sẽ xử lí cho phần đăng nhập bằng gg, nếu người dùng chọn đăng nhập với tài khoản gg của mình thì bên gg sẽ return về cho chúng ta
 1 user object chứ những thông tin của user
 
-The user object returned from Google Account
-
-{id: "108223206370324493495", name: "Testing Mail", email: "codemazetest@gmail.com", photoUrl: …}
-authToken: "ya29.a0AfH6SMB_pXBrYm1wdIB3v-uAGohuXWDKfmsszvsFxuH4hn-gW7E5tf1IW4v32rgJbY6cEDsYgxcsWoVAfSs2ono..."
-email: "codemazetest@gmail.com"
-firstName: "Testing"
-id: "108223206370324493495"
-idToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJjNDk1MzBlMWZmOTA4M2RkNWV..."
-lastName: "Mail"
-name: "Testing Mail"
-photoUrl: "https://lh6.googleusercontent.com/-URt2WpWJqRw/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmGZsYnDp0Ow4ubf2H-lN8kScXsYA/s96-c/photo.jpg"
-provider: "GOOGLE"
-response: Ew {NT: "108223206370324493495", Ad: "Testing Mail", tV: "Testing", uT: "Mail", TJ: "https://lh6.googleusercontent., …}
-__proto__: Object
-
 Trong đây sẽ có idToken và Provider
 
 "? có bài còn sử dụng ClientSerect ?"
@@ -36,3 +21,22 @@ Cách cài:
      (việc truyền vào clientId đảm bảo việc xác thực token là của ứng dụng của mình) 
   2. gọi method ValidateAsync nhận tham số truyền vào là IdToken từ dto request và đối tượng validationSettings để validate token từ google
      nếu token hợp lệ sẽ return Payload của token chứa thông tin của người dùng
+
+https://users.soict.hust.edu.vn/hoangph/courses/IT4927/Google%20OAuth%20-%20Technical%20Semina.pdf
+tiếng việt hướng dẫn google login
+
+https://accounts.google.com/o/oauth2/v2/auth?
+scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&
+access_type=offline&
+include_granted_scopes=true&response_type=code&
+redirect_uri=http://localhost:9000/api/Users/LoginGoogle&
+client_id=634932227060-2cdka612v49ginvt7mq7no4v79m5d80r.apps.googleusercontent.com
+
+{
+  "access_token": "ya29.a0AeTM1idVocR-MoVBWvsVB93Q6EvX9xBUP6JR3008XMHaOPTT128C_DO4xCYbTlmsb6MDhjMMus-3aDWpmdCere_fED1jkZuERW61T2sgM9Cyq8Jq2JcH-bCGjd3JP96BYFjPaE4LFvFgiGJBqE-g6fWu11UkaCgYKAXYSARESFQHWtWOmk8fZNnxptl4AHfKaG_sl8A0163",
+  "expires_in": 3546,
+  "scope": "https://www.googleapis.com/auth/drive.metadata.readonly",
+  "token_type": "Bearer"
+}
+
+https://www.googleapis.com/oauth2/v3/userinfo?access_token=ya29.a0AeTM1ifMTOar-Z8f89y6doo-ceYKGuz6jboGHJFIrG8jxoDAXju-YaWW2CGqBmFvsU69igpCE8c2cH79IlaowogZFos9LvCTKOMXg5HY0ImImP5PmdbdstBHbBkATR9qXjNw4w8nJ4UulE0Cq1tcyBvCsFWIDgaCgYKAcASARESFQHWtWOmA6sSWYoNmSM9-_7mGxyOMQ0165

@@ -2,10 +2,16 @@
 using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Helper.JWT;
+using Google.Apis.Gmail.v1.Data;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using MimeKit;
+using Newtonsoft.Json;
 using System.Security.Claims;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
+
 
 namespace Demo.Controllers
 {
@@ -16,12 +22,14 @@ namespace Demo.Controllers
         private readonly IUserBUS userBUS;
         private readonly IJwtUtils jwtUtils;
         private readonly GoogleSettings google;
+        private readonly EmailConfiguration emailConfig;
 
-        public UsersController(IUserBUS userBUS, IJwtUtils jwtUtils, IOptions<GoogleSettings> google)
+        public UsersController(IUserBUS userBUS, IJwtUtils jwtUtils, IOptions<GoogleSettings> google, IOptions<EmailConfiguration> emailConfig)
         {
             this.userBUS = userBUS;
             this.jwtUtils = jwtUtils;
             this.google = google.Value;
+            this.emailConfig = emailConfig.Value;
         }
 
         [HttpPost]
@@ -83,7 +91,8 @@ namespace Demo.Controllers
         public IActionResult LoginLink()
         {
             LinkLoginGoogle link = new();
-            link.Link = $"{google.IdentityPlatform.AuthUri}&{google.RedirectUri}&{google.ClientId}";
+
+            link.Link = $"{google.IdentityPlatform.AuthUri}&redirect_uri={google.RedirectUri}&client_id={google.ClientId}";
             return Ok(link);
         }
 
@@ -99,28 +108,25 @@ namespace Demo.Controllers
         }
 
         [HttpGet("LoginGoogle")]
-        public async Task<IActionResult> LoginGoogleAsync()
+        public async Task<IActionResult> LoginGoogleAsync([FromQuery] string code)
         {
-            StringContent content = new StringContent("");
             HttpClient client = new();
-            //HttpResponseMessage response = await client.PostAsync($"{google.IdentityPlatform.AuthUri}&{google.RedirectUri}&{google.ClientId}",content);
-            HttpResponseMessage response = await client.GetAsync("https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=http://localhost:9000/api/Users/LoginGoogle&client_id=634932227060-2cdka612v49ginvt7mq7no4v79m5d80r.apps.googleusercontent.com");
+            HttpResponseMessage responseToken = await client.PostAsync($"{google.IdentityPlatform.TokenUri}&code={code}&client_id={google.ClientId}&client_secret={google.ClientSecret}&redirect_uri={google.RedirectUri}", new StringContent(""));
+            //responseToken.get
+            string contentToken = await responseToken.Content.ReadAsStringAsync();
+            TokenResult tokenResult = JsonConvert.DeserializeObject<TokenResult>(contentToken);
 
-            
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {tokenResult.Access_token}");
+            //HttpResponseMessage responseInfo = await client.GetAsync($"{google.IdentityPlatform.UserInfoUri}");
 
-            var location = response.Headers.Location;
-            
+            //HttpResponseMessage responseInfo = await client.GetAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.Access_token}");
 
-            if (response.IsSuccessStatusCode)
-            {
-                foreach (var hearder in response.Headers)
-                {
-                    Console.WriteLine(hearder);
-                }
-            }
-            if (response.Headers != null)
-                return Ok(response.Headers);
-            return BadRequest();
+            HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}$access_token={tokenResult.Access_token}", new StringContent(""));
+
+
+
+            string contentInfo = await responseInfo.Content.ReadAsStringAsync();
+            return Ok();
         }
 
         //[HttpPost("LoginGoogle")]
@@ -148,5 +154,31 @@ namespace Demo.Controllers
         //    return BadRequest();
 
         //}
+        [HttpGet("SendMailSmtp")]
+        public IActionResult SendMailSmtp([FromQuery] string email)
+        {
+            Random oTP = new();
+            var message = new DTO.Message(email, "Test email", $"OTP : {oTP.Next(1000,9999)}");
+
+            MimeMessage mimeMessage = CreateEmailMessage(message);
+
+            SmtpClient client = new();
+            client.Connect(emailConfig.SmtpServer, emailConfig.Port, true);
+            client.AuthenticationMechanisms.Remove("XOAUTH2"); // Các cơ chế xác thực được truy vấn như một phần của quá trình kết nối. Để ngăn việc sử dụng các cơ chế xác thực nhất định
+            client.Authenticate(emailConfig.Username, emailConfig.Password);
+            client.Send(mimeMessage);
+            return Ok();
+        }
+        private MimeMessage CreateEmailMessage(DTO.Message message)
+        {
+            MimeMessage emailMessage = new();
+            emailMessage.From.Add(new MailboxAddress("Test SMTP",emailConfig.From));
+            emailMessage.To.Add(message.To);
+            emailMessage.Subject = message.Subject;
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+            return emailMessage;
+        }
+       
     }
+    
 }

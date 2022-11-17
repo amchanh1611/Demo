@@ -76,18 +76,18 @@ namespace Demo.BUS.BUS
             return userRepository.Upadte(user);
         }
 
-        public async Task<Payload> VerifyGoogleToken(ExternalAuthDto externalAuth)
+        public async Task<Payload> VerifyGoogleToken(string clientId,string  token)
         {
             //Settings used when validating a JSON Web Signature.
             ValidationSettings settings = new()
             {
                 //GetSection : Gets a configuration sub-section with the specified key.
-                Audience = new List<string>() { google.GetSection("clientId").Value }
+                Audience = new List<string>() { clientId }
             };
         // Validates a Google-issued Json Web Token (JWT)
         //Returns:
         //     The payload of the verified token.
-            Payload payload = await ValidateAsync(externalAuth.IdToken, settings);
+            Payload payload = await ValidateAsync(token, settings);
 
             return payload;
         }

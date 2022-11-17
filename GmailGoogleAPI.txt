@@ -1,0 +1,35 @@
+Upload URI, for media upload requests:
+POST https://gmail.googleapis.com/upload/gmail/v1/users/{userId}/messages/send
+Metadata URI, for metadata-only requests:
+POST https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/send
+
+Parameter: userId : string user email address
+Request body
+The request body contains an instance of Message.
+
+Response body
+If successful, the response body contains an instance of Message.
+
+Luồng forgot password:
+ 1. bấm dô quên mật khẩu
+ 2. chuyển hướng đến trang nhập gmail
+ 3. nhập đúng gmail của user đó thì có gmail chứ otp gửi về 
+ 4. nhập sai bắt nhập lại
+
+sau khi enable gmail api
+1. tạo gmail với draft
+2. send email bằng httpClient phương thức get
+
+Resources Type
+Draft: 1 message chưa gửi mà bạn có thể chỉnh sửa khi tạo
+Message : 1 resource bất biến mà bạn không thể chỉnh sửa được
+Thread : 1 collection message trong 1 cuộc hội thoại
+Label: 1 resource để sắp xếp message và thread
+History: 1 collection các thay đổi được thực hiện đối với mailbox
+Settings: settings các tính năng của gmail
+https://developers.google.com/identity/protocols/oauth2/scopes#gmail scope
+
+package: Google.Apis.Gmail
+
+cấp quyền truy cập vào tài khoản gmail từ App => cần tạo file QuickStarttrong thư mục làm việc
+https://github.com/googleworkspace/dotnet-samples/blob/master/gmail/GmailQuickstart/GmailQuickstart.cs

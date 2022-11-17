@@ -18,7 +18,7 @@ namespace Demo.BUS.IBUS
         bool Delete(int userId);
 
         LoginResponse Login(LoginRequest request);
-        Task<Payload> VerifyGoogleToken(ExternalAuthDto externalAuth);
+        Task<Payload> VerifyGoogleToken(string clientId, string token);
         User FindByLoginGoogle(string email, string provider);
     }
 }
