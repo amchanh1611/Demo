@@ -121,7 +121,7 @@ namespace Demo.Controllers
 
             //HttpResponseMessage responseInfo = await client.GetAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.Access_token}");
 
-            HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}$access_token={tokenResult.Access_token}", new StringContent(""));
+            HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.Access_token}", new StringContent(""));
 
 
 
