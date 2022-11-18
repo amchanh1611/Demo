@@ -3,15 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Demo.DTO
 {
     public class TokenResult
     {
-        public string? Access_token { get; set; }
-        public string? Expires_in { get; set; }
+        [JsonPropertyName("access_token")]
+        public string? AccessToken { get; set; }
+        [JsonPropertyName("expires_in")]
+        public int? ExpiresIn { get; set; }
+        [JsonPropertyName("scope")]
         public string? Scope { get; set; }
-        public string? Token_type { get; set; }
+        [JsonPropertyName("token_type")]
+        public string? TokenType { get; set; }
+
     }
 }

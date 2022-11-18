@@ -7,8 +7,11 @@ using Demo.Helper.AutoMapperProfiles;
 using Demo.Helper.JWT;
 using Demo.Repository.IRepository;
 using Demo.Repository.Repository;
+using Demo.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Hangfire;
+using Hangfire.MySql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +20,13 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//Hangfire
+builder.Services.AddHangfire
+    (x => x.UseStorage(
+        new MySqlStorage("server=localhost;database=hangfire;uid=root;pwd='';Allow User Variables=True",
+        new MySqlStorageOptions())));
+builder.Services.AddHangfireServer(options => builder.Configuration.GetSection("HangfireSettings:Server").Bind(options));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,9 +45,12 @@ builder.Services.AddDbContextPool<DemoDbContext>(option =>
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(UserProfile));
 
+//Scopes
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBUS, UserBUS>();
 builder.Services.AddTransient<IJwtUtils, JwtUtils>();
+builder.Services.AddScoped<IUserServies, UserServies>();
+
 
 //Fluent Validation
 builder.Services.AddFluentValidationAutoValidation()
@@ -78,6 +91,8 @@ app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
+
+app.UseHangfireDashboard();
 
 app.UseAuthorization();
 

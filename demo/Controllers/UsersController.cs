@@ -2,15 +2,17 @@
 using Demo.BUS.IBUS;
 using Demo.DTO;
 using Demo.Helper.JWT;
-using Google.Apis.Gmail.v1.Data;
+using Demo.Helpers;
+using Demo.Services;
+using Hangfire;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using Newtonsoft.Json;
 using System.Security.Claims;
-using static Google.Apis.Auth.GoogleJsonWebSignature;
+using System.Text.Json;
+using System.Timers;
 
 
 namespace Demo.Controllers
@@ -23,13 +25,17 @@ namespace Demo.Controllers
         private readonly IJwtUtils jwtUtils;
         private readonly GoogleSettings google;
         private readonly EmailConfiguration emailConfig;
+        private readonly IUserServies userServices;
+        private readonly IBackgroundJobClient backgroundJobClient;
 
-        public UsersController(IUserBUS userBUS, IJwtUtils jwtUtils, IOptions<GoogleSettings> google, IOptions<EmailConfiguration> emailConfig)
+        public UsersController(IUserBUS userBUS, IJwtUtils jwtUtils, IOptions<GoogleSettings> google, IOptions<EmailConfiguration> emailConfig, IUserServies userServices, IBackgroundJobClient backgroundJobClient)
         {
             this.userBUS = userBUS;
             this.jwtUtils = jwtUtils;
             this.google = google.Value;
             this.emailConfig = emailConfig.Value;
+            this.userServices = userServices;
+            this.backgroundJobClient = backgroundJobClient;
         }
 
         [HttpPost]
@@ -114,19 +120,33 @@ namespace Demo.Controllers
             HttpResponseMessage responseToken = await client.PostAsync($"{google.IdentityPlatform.TokenUri}&code={code}&client_id={google.ClientId}&client_secret={google.ClientSecret}&redirect_uri={google.RedirectUri}", new StringContent(""));
             //responseToken.get
             string contentToken = await responseToken.Content.ReadAsStringAsync();
-            TokenResult tokenResult = JsonConvert.DeserializeObject<TokenResult>(contentToken);
+            //TokenResult tokenResult = JsonConvert.DeserializeObject<TokenResult>(contentToken);
+            TokenResult tokenResult = JsonSerializer.Deserialize<TokenResult>(contentToken);
 
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {tokenResult.Access_token}");
+            //client.DefaultRequestHeaders.Add("Authorization", $"Bearer {tokenResult.Access_token}");
             //HttpResponseMessage responseInfo = await client.GetAsync($"{google.IdentityPlatform.UserInfoUri}");
 
             //HttpResponseMessage responseInfo = await client.GetAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.Access_token}");
 
-            HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.Access_token}", new StringContent(""));
-
-
-
+            HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.AccessToken}", new StringContent(""));
             string contentInfo = await responseInfo.Content.ReadAsStringAsync();
+            InfoResult infoResult = JsonSerializer.Deserialize<InfoResult>(contentInfo);
+            Random oTP = new();
+            var message = new DTO.Message("am.chanh1199@gmail.com", "Test email", $"This is now OTP : {oTP.Next(1000, 9999)}\n Expire 2 minute ");
+
+            MimeMessage mimeMessage = CreateEmailMessage(message, infoResult.Email);
+            TimeSpan time = new(0, 0, 10);
+            //await userServices.SendMessageAsync(tokenResult.AccessToken, "am.chanh16111@gmail.com", mimeMessage);
+
+            backgroundJobClient.Enqueue( () => SendMessageAsync(tokenResult.AccessToken, "0468191090@caothang.edu.vn",infoResult.Email));
+
+            //int statusCode = await userServices.SendMessageAsync(tokenResult.AccessToken, "0468191090@caothang.edu.vn", mimeMessage);
+
             return Ok();
+        }
+        public void Console()
+        {
+            System.Console.WriteLine("Yes....");
         }
 
         //[HttpPost("LoginGoogle")]
@@ -158,9 +178,9 @@ namespace Demo.Controllers
         public IActionResult SendMailSmtp([FromQuery] string email)
         {
             Random oTP = new();
-            var message = new DTO.Message(email, "Test email", $"OTP : {oTP.Next(1000,9999)}");
+            var message = new DTO.Message(email, "Test email", $"OTP : {oTP.Next(1000, 9999)}");
 
-            MimeMessage mimeMessage = CreateEmailMessage(message);
+            MimeMessage mimeMessage = CreateEmailMessage(message, emailConfig.From);
 
             SmtpClient client = new();
             client.Connect(emailConfig.SmtpServer, emailConfig.Port, true);
@@ -169,16 +189,36 @@ namespace Demo.Controllers
             client.Send(mimeMessage);
             return Ok();
         }
-        private MimeMessage CreateEmailMessage(DTO.Message message)
+        private MimeMessage CreateEmailMessage(DTO.Message message, string emailFrom)
         {
             MimeMessage emailMessage = new();
-            emailMessage.From.Add(new MailboxAddress("Test SMTP",emailConfig.From));
+            emailMessage.From.Add(new MailboxAddress("Test ", emailFrom));
             emailMessage.To.Add(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
             return emailMessage;
         }
-       
+
+        public async Task SendMessageAsync(string senderAccessToken, string senderEmail,string sendToEmail)
+        {
+            Random oTP = new();
+            var message = new DTO.Message("am.chanh1199@gmail.com", "Test email", $"This is now OTP : {oTP.Next(1000, 9999)}\n Expire 2 minute ");
+
+            MimeMessage mimeMessage = CreateEmailMessage(message, sendToEmail);
+            object dataRequestSendMessage = new
+            {
+                raw = mimeMessage.Base64UrlSafeEncode()
+            };
+
+            HttpClient client = new();
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {senderAccessToken}");
+
+            HttpResponseMessage response = await client.PostAsync($"{google.Gmail.UsersUri}/me/messages/send", new StringContent(JsonSerializer.Serialize(dataRequestSendMessage)));
+            System.Console.WriteLine(response.StatusCode);
+
+
+        }
+
     }
-    
+
 }

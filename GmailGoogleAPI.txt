@@ -1,5 +1,5 @@
 Upload URI, for media upload requests:
-POST https://gmail.googleapis.com/upload/gmail/v1/users/{userId}/messages/send
+POST https://gmail.googleapis.com/upload/gmail/v1/users/{userId}/messages/send/
 Metadata URI, for metadata-only requests:
 POST https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/send
 
