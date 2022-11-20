@@ -1,0 +1,22 @@
+về việc using httpClient ??????????
+gửi mail bằng smtp và google api nên sử dụng cái nào ??????????????????????
+độ dài của refresh em dùng varchar 255 có hợp lí k ????????????????????
+vì sao trường bị required nhưng đã set default thì postman truyền được còn swagger thì không ????????????????????????
+
+refresh token chỉ hết hạn khi: 
+ - người dùng bị thu hồi quyền truy cập vào hệ thống
+ - refresh token đã không được sử dụng trong 6 tháng 
+ - người dùng đã thay đổi mật khẩu và refresh token chứa gmail scope
+ - đã vượt quá giới hạn refresh token được cấp: giới hạn là 100
+
+ya29.a0AeTM1ieddZZjy91v5542HtFQgYqv49oqoQq7W4VHggoSk-XBeS-Z3U08bovjxheSWyrN_UGGorQzH3_izk5ZUKjuZqlCSZElOd8orzDWq81
+96_5Emjl2Q0OipnKy06F5JAOw5RIE9t2lwYqv746-sEng29RpaCgYKAcISARESFQHWtWOmVyCfN103zTY8dn-QGO48eA0163
+
+1//0enPz8rco37vHCgYIARAAGA4SNwF-L9IrwJP-0yaKwPdeclzsG6XZOXLTRq1vkdZEQ9lfzWmrqXwi-jhDB40s8h4_sLFlRcMn9OI
+
+ya29.a0AeTM1id6LnFqbb-1nhg3_IUWlRBwInrT6oIlVyEAZQfPkvLm27Ga-hcuY3e6CrEuegNKkRJtSl2FrNQ70kZ6ip6TtxbRD5gonsngHdYAl4Lw
+z6AwxiuQsquh1GYjNgRmWSt4IOjFJJnIoKwOY3nT6nLdPd3daCgYKAdoSARESFQHWtWOmMPCzb--aYDnY74eqpDj7zQ0163
+
+
+HttpResponseMessage responseRefresh = await client.PostAsync($"{google.IdentityPlatform.TokenUri}?client_id={google.ClientId}&client_secret={google.ClientSecret}&refresh_token={tokenResult.RefreshToken}&grant_type=refresh_token",new StringContent(""));
+string contentRefresh = await responseRefresh.Content.ReadAsStringAsync();

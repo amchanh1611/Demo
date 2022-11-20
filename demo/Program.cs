@@ -24,7 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Hangfire
 builder.Services.AddHangfire
     (x => x.UseStorage(
-        new MySqlStorage("server=localhost;database=hangfire;uid=root;pwd='';Allow User Variables=True",
+        new MySqlStorage("server=localhost;database=demo;uid=root;pwd='';Allow User Variables=True",
         new MySqlStorageOptions())));
 builder.Services.AddHangfireServer(options => builder.Configuration.GetSection("HangfireSettings:Server").Bind(options));
 

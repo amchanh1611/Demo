@@ -1,0 +1,22 @@
+Class không chưa bất kì biến hoặc thành viên bình thường nào
+ - không cho phép khởi tạo object với class này bằng toán tử new
+ - không cho phép khai báo thành viên thường mà chỉ khai báo thành viên tĩnh 
+ - không cho phép kế thừa
+ - có thể using static class rồi gọi thẳng method mà không cần thông qua tên class
+ - khác với class thường là có thể using static rồi gọi thẳng method 
+=> có thể gọi thẳng method từ static class mà không cần phải gọi qua tên class 
+
+Cú pháp sử dụng static class:
+ 1.Khai báo static class
+ 2.Ở class cần sử dụng method của static class cần using static namespaceStaticClass).NameStaticClass
+ 3.Khi sử dụng chỉ cần gọi thẳng static method trong static class
+
+ExtentionMethod : thực chất là 1 static method nằm trong static class
+
+khác với static class ở chổ từ khóa this : có thể gọi chúng từ 1 biến bất kì có cùng kiểu dữ liệu với biến khai báo this và không cần truyền biến
+đó khi gọi extentionMethod
+
+Cú pháp sử dụng ExtentionMethod :
+ 1.Khai báo ExtentionMethod cho kiểu nào thì thêm "this" vào trước kiểu đó
+ 2.using namespace của ExtentionMethod 
+ 3.Khi sử dụng chỉ: (biến cần sử dụng ExtentionMethod).(ExtentionMethod) không cần truyền lại biến vào param của ExtentionMethod 

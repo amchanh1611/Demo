@@ -11,7 +11,8 @@
         public string? Phone { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? Avatar { get; set; }
-        public string Provider { get; set; } = default!;
+        public string? RefreshToken { get; set; }
+        public string? Provider { get; set; } = default!;
         //public string? ProviderKey { get; set; }
     }
 }
