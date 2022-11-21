@@ -34,6 +34,7 @@ namespace Demo.Services
             HttpClient client = new();
             HttpResponseMessage responseRefresh = await client.PostAsync($"{google.IdentityPlatform.TokenUri}?client_id={google.ClientId}&client_secret={google.ClientSecret}&refresh_token={user.RefreshToken}&grant_type=refresh_token", new StringContent(""));
             string contentRefresh = await responseRefresh.Content.ReadAsStringAsync();
+
             TokenResult tokenResult = JsonSerializer.Deserialize<TokenResult>(contentRefresh);
 
             Message message = new(messageRequest.To, messageRequest.Subject, messageRequest.Content);

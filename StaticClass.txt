@@ -20,3 +20,4 @@ Cú pháp sử dụng ExtentionMethod :
  1.Khai báo ExtentionMethod cho kiểu nào thì thêm "this" vào trước kiểu đó
  2.using namespace của ExtentionMethod 
  3.Khi sử dụng chỉ: (biến cần sử dụng ExtentionMethod).(ExtentionMethod) không cần truyền lại biến vào param của ExtentionMethod 
+this voi extention method duoc dung khi nao

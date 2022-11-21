@@ -109,47 +109,45 @@ namespace Demo.Controllers
         [HttpGet("LoginGoogle")]
         public async Task<IActionResult> LoginGoogleAsync([FromQuery] string code)
         {
-            using (HttpClient client = new())
+            using HttpClient client = new();
+            HttpResponseMessage responseToken = await client.PostAsync($"{google.IdentityPlatform.TokenUri}?grant_type=authorization_code&code={code}&client_id={google.ClientId}&client_secret={google.ClientSecret}&redirect_uri={google.RedirectUri}", new StringContent(""));
+
+            string contentToken = await responseToken.Content.ReadAsStringAsync();
+            TokenResult tokenResult = JsonSerializer.Deserialize<TokenResult>(contentToken);
+
+            HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.AccessToken}", new StringContent(""));
+            string contentInfo = await responseInfo.Content.ReadAsStringAsync();
+
+            InfoResult infoResult = JsonSerializer.Deserialize<InfoResult>(contentInfo);
+
+            User user = new();
+            string token;
+            user = userBUS.FindByLoginGoogle(infoResult.Email, "google");
+
+            if (user != null)
             {
-                HttpResponseMessage responseToken = await client.PostAsync($"{google.IdentityPlatform.TokenUri}?grant_type=authorization_code&code={code}&client_id={google.ClientId}&client_secret={google.ClientSecret}&redirect_uri={google.RedirectUri}", new StringContent(""));
-
-                string contentToken = await responseToken.Content.ReadAsStringAsync();
-                TokenResult tokenResult = JsonSerializer.Deserialize<TokenResult>(contentToken);
-
-                HttpResponseMessage responseInfo = await client.PostAsync($"{google.IdentityPlatform.UserInfoUri}?access_token={tokenResult.AccessToken}", new StringContent(""));
-                string contentInfo = await responseInfo.Content.ReadAsStringAsync();
-
-                InfoResult infoResult = JsonSerializer.Deserialize<InfoResult>(contentInfo);
-
-                User user = new();
-                string token;
-                user = userBUS.FindByLoginGoogle(infoResult.Email, "google");
-
-                if (user != null)
-                {
-                    token = jwtUtils.GenerateJwtToken(user);
-                    return Ok(token);
-                }
-
-                bool check = await userBUS.CreateAsync(new CreateUserRequest
-                {
-                    Email = infoResult.Email,
-                    UserName = infoResult.Email,
-                    FullName = $"{infoResult.LastName} {infoResult.FirstName}",
-                    RefreshToken = tokenResult.RefreshToken,
-                    Provider = "google"
-                });
-                user = userBUS.FindByLoginGoogle(infoResult.Email, "google");
                 token = jwtUtils.GenerateJwtToken(user);
                 return Ok(token);
             }
+
+            bool check = await userBUS.CreateAsync(new CreateUserRequest
+            {
+                Email = infoResult.Email,
+                UserName = infoResult.Email,
+                FullName = $"{infoResult.LastName} {infoResult.FirstName}",
+                RefreshToken = tokenResult.RefreshToken,
+                Provider = "google"
+            });
+            user = userBUS.FindByLoginGoogle(infoResult.Email, "google");
+            token = jwtUtils.GenerateJwtToken(user);
+            return Ok(token);
         }
 
         [HttpPost("SendMail/{userId}")]
         public IActionResult SendMail([FromRoute] int userId, [FromBody] MessageRequest message)
         {
-            TimeSpan delay = message.DateSend - DateTime.Now;
-            backgroundJobClient.Schedule(() => userServices.SendMessageAsync(userId, message), delay);
+            DateTimeOffset date = new(message.DateSend!.Value);
+            backgroundJobClient.Schedule(() => userServices.SendMessageAsync(userId, message), date);
             //userServices.SendMessageAsync(userId, message);
             return Ok();
         }

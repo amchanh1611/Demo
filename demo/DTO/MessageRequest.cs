@@ -2,6 +2,6 @@
 {
     public class MessageRequest : MessageBase
     {
-       public DateTime DateSend { get; set; } = DateTime.Now;
+       public DateTime? DateSend { get; set; } = DateTime.Now;
     }
 }
